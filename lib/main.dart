@@ -5,6 +5,7 @@ import 'controllers/screen_controller.dart';
 import 'screens/awareness_screen.dart';
 import 'screens/best_from_waste_screen.dart';
 import 'screens/map_screen.dart';
+import 'screens/notification_screen.dart';
 import 'screens/profile_screen.dart';
 import 'screens/trash_scan_screen.dart';
 import 'package:get/get.dart';
@@ -43,15 +44,53 @@ class MyHomePage extends StatelessWidget {
     return Obx(
       () => Scaffold(
         backgroundColor: const Color.fromARGB(255, 247, 243, 243),
-        body: screenController.screen_index.value == 0
-            ? AwarenessScreen()
-            : screenController.screen_index.value == 1
-                ? BestFromWasteScreen()
-                : screenController.screen_index.value == 2
-                    ? MapScreen()
-                    : screenController.screen_index.value == 3
-                        ? ProfileScreen()
-                        : TrashScanScreen(),
+        body: Stack(children: [
+          Padding(
+            padding: EdgeInsets.only(top: 30, right: 15),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                CircleAvatar(
+                  backgroundColor: Colors.white,
+                  child: IconButton(
+                      onPressed: () {
+                        if (screenController.screen_index.value != 5) {
+                          screenController.prev =
+                              screenController.screen_index.value;
+                          print(screenController.prev);
+                          screenController.screen_index.value = 5;
+                        } else {
+                          print(screenController.prev);
+                          screenController.screen_index.value =
+                              screenController.prev;
+                        }
+
+                        ;
+                      },
+                      icon: Icon(
+                        screenController.screen_index.value == 5
+                            ? Icons.notifications_on
+                            : Icons.notifications,
+                        color: screenController.screen_index.value == 5
+                            ? Colors.green
+                            : Color.fromARGB(255, 69, 71, 69),
+                      )),
+                ),
+              ],
+            ),
+          ),
+          screenController.screen_index.value == 0
+              ? AwarenessScreen()
+              : screenController.screen_index.value == 1
+                  ? BestFromWasteScreen()
+                  : screenController.screen_index.value == 2
+                      ? MapScreen()
+                      : screenController.screen_index.value == 3
+                          ? ProfileScreen()
+                          : screenController.screen_index.value == 4
+                              ? TrashScanScreen()
+                              : NotificationScreen(),
+        ]),
         floatingActionButton: FloatingActionButton(
           child: Icon(
             Icons.qr_code_scanner,
