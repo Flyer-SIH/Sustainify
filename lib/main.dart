@@ -25,8 +25,7 @@ class MyApp extends StatelessWidget {
         initialBinding: InitialBindings(),
         initialRoute: "/home",
         theme: ThemeData(
-          colorScheme:
-              ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 79, 177, 83)),
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.brown),
         ),
         routes: {
           '/home': (context) => MyHomePage(),
@@ -72,7 +71,7 @@ class MyHomePage extends StatelessWidget {
                             ? Icons.notifications_on
                             : Icons.notifications,
                         color: screenController.screen_index.value == 5
-                            ? Colors.green
+                            ? Colors.brown
                             : Color.fromARGB(255, 69, 71, 69),
                       )),
                 ),
@@ -100,7 +99,7 @@ class MyHomePage extends StatelessWidget {
             print("help");
             screenController.screen_index.value = 4;
           },
-          backgroundColor: Colors.green,
+          backgroundColor: Colors.brown,
           //params
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -112,7 +111,7 @@ class MyHomePage extends StatelessWidget {
             Icons.person_2_rounded
           ],
           activeIndex: screenController.screen_index.value,
-          activeColor: Color.fromARGB(255, 88, 153, 80),
+          activeColor: Colors.brown,
           inactiveColor: Color.fromARGB(255, 69, 71, 69),
           gapLocation: GapLocation.center,
           notchSmoothness: NotchSmoothness.smoothEdge,
