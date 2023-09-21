@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sustainify/Item_Data.dart';
+import 'package:sustainify/screens/information_screen.dart';
 import 'package:sustainify/screens/rewards_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -75,7 +76,12 @@ class ProfileScreen extends StatelessWidget {
               ProfileMenuWidget(title: "User Management", icon: Icons.person, onPress: () {}),
               const Divider(),
               const SizedBox(height: 10),
-              ProfileMenuWidget(title: "Information", icon: Icons.info, onPress: () {}),
+              ProfileMenuWidget(
+                  title: "Information",
+                  icon: Icons.info,
+                  onPress: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => AboutApp()));
+                  }),
             ],
           ),
         ),
