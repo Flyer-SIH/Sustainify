@@ -2,6 +2,8 @@ import 'package:expandable/expandable.dart';
 
 import 'package:flutter/material.dart';
 import 'package:sustainify/models.dart';
+import 'package:sustainify/widgets/balance_widget.dart';
+import 'package:sustainify/widgets/total_earnings.dart';
 
 class RewardsScreen extends StatefulWidget {
   final List<Item> items;
@@ -49,12 +51,13 @@ class _RewardsScreenState extends State<RewardsScreen> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(children: [
+            Balance(
+              totalPoints: totalPoints,
+            ),
             const SizedBox(height: 5),
-            totalPoints > 0
-                ? RewardCup(items: widget.items)
-                : const Center(
-                    child: Text(""),
-                  ),
+            TotalEarnings(
+              totalPoints: totalPoints,
+            ),
             const SizedBox(height: 10),
             CoinsCup(items: widget.items),
             const SizedBox(height: 10),
@@ -81,8 +84,9 @@ class _RewardsScreenState extends State<RewardsScreen> {
       child: Card(
         clipBehavior: Clip.antiAlias,
         child: Container(
+            padding: EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: const Color(0xff69c0dc),
+              color: Colors.indigo,
               borderRadius: BorderRadius.circular(15),
               boxShadow: [
                 BoxShadow(
@@ -148,20 +152,6 @@ class _RewardsScreenState extends State<RewardsScreen> {
                       )))
             ])),
       ));
-}
-
-class RewardCup extends StatelessWidget {
-  final List<Item> items;
-  const RewardCup({Key? key, required this.items}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          children: [titleCard(title: "Your Reward"), RewardsBanner(items: items)],
-        ));
-  }
 }
 
 class CoinsCup extends StatelessWidget {
