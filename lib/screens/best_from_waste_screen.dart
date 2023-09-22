@@ -17,9 +17,15 @@ class BestFromWasteScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SectionTitle(title: 'Agricultural'),
-            ProductList(products: recycleAgriculturalProducts),
+            ProductList(
+              products: recycleAgriculturalProducts,
+              type: 'agricultural',
+            ),
             const SectionTitle(title: 'Household'),
-            ProductList(products: dummyHouseholdProducts),
+            ProductList(
+              products: dummyHouseholdProducts,
+              type: 'household',
+            ),
           ],
         ),
       ),
@@ -51,8 +57,8 @@ class SectionTitle extends StatelessWidget {
 
 class ProductList extends StatelessWidget {
   final List<Product> products;
-
-  const ProductList({super.key, required this.products});
+  final String type;
+  const ProductList({super.key, required this.products, required this.type});
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +68,11 @@ class ProductList extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         itemCount: products.length,
         itemBuilder: (BuildContext context, int index) {
-          return ProductDisplayCard(product: products[index]);
+          return ProductDisplayCard(
+            product: products[index],
+            index: index,
+            type: type,
+          );
         },
       ),
     );
@@ -71,8 +81,10 @@ class ProductList extends StatelessWidget {
 
 class ProductDisplayCard extends StatelessWidget {
   final Product product;
+  final String type;
+  final int index;
 
-  const ProductDisplayCard({super.key, required this.product});
+  const ProductDisplayCard({super.key, required this.product, required this.type, required this.index});
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +109,8 @@ class ProductDisplayCard extends StatelessWidget {
           Container(
             height: 157,
             width: 157,
-            color: Colors.red,
+            decoration: BoxDecoration(
+                image: DecorationImage(image: AssetImage('assets/images/$type/$index.jpg'), fit: BoxFit.cover)),
           ),
           const SizedBox(height: 16),
           Padding(
