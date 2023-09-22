@@ -12,14 +12,9 @@ List<Product> dummyHouseholdProducts = [
   Product(heading: 'Dishwasher Tablets', quantity: 2, state: 'New'),
 ];
 
-List<Product> dummyAgriculturalProducts = [
-  Product(heading: 'Wheat', quantity: 500, state: 'Fresh'),
-  Product(heading: 'Corn', quantity: 300, state: 'Fresh'),
-  Product(heading: 'Rice', quantity: 200, state: 'Fresh'),
-  Product(heading: 'Potatoes', quantity: 100, state: 'Fresh'),
-  Product(heading: 'Apples', quantity: 150, state: 'Fresh'),
-  Product(heading: 'Tomatoes', quantity: 250, state: 'Fresh'),
-  Product(heading: 'Carrots', quantity: 80, state: 'Fresh'),
-  Product(heading: 'Onions', quantity: 120, state: 'Fresh'),
-  Product(heading: 'Cucumbers', quantity: 90, state: 'Fresh'),
+List<Product> recycleAgriculturalProducts = [
+  Product(heading: 'Used Tractor Tires', quantity: 10, state: 'Recycle'),
+  Product(heading: 'Old Wooden Crates', quantity: 5, state: 'Recycle'),
+  Product(heading: 'Broken Irrigation Pipes', quantity: 8, state: 'Recycle'),
+  Product(heading: 'Empty Pesticide Containers', quantity: 20, state: 'Recycle'),
 ];

@@ -36,9 +36,9 @@ class BestFromWasteScreen extends StatelessWidget {
                       itemCount: 4,
                       itemBuilder: (BuildContext context, int index) {
                         return ProductDisplayCard(
-                          heading: dummyAgriculturalProducts[index].heading,
-                          state: dummyAgriculturalProducts[index].state,
-                          quantity: dummyAgriculturalProducts[index].quantity,
+                          heading: recycleAgriculturalProducts[index].heading,
+                          state: recycleAgriculturalProducts[index].state,
+                          quantity: recycleAgriculturalProducts[index].quantity,
                         );
                       },
                     ),
