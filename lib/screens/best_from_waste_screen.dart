@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sustainify/dummy_data/product_dummy_data.dart';
+import 'package:sustainify/models/product_model.dart';
 
 class BestFromWasteScreen extends StatelessWidget {
   const BestFromWasteScreen({Key? key});
@@ -7,172 +8,144 @@ class BestFromWasteScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Best From Waste'),
+      ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(0, 42, 16, 0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Padding(
-                padding: EdgeInsets.only(left: 16),
-                child: Text(
-                  'Agricultural',
-                  style: TextStyle(
-                    letterSpacing: -0.4,
-                    color: Colors.black,
-                    fontSize: 24,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 300, // Set the desired height for your product cards
-                child: ListView(
-                  shrinkWrap: true,
-                  children: [
-                    SizedBox(
-                      height: 270, // Set the overall height of your BestFromWasteScreen
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal, // Enable horizontal scrolling
-                        itemCount: 4,
-                        itemBuilder: (BuildContext context, int index) {
-                          return ProductDisplayCard(
-                            heading: recycleAgriculturalProducts[index].heading,
-                            state: recycleAgriculturalProducts[index].state,
-                            quantity: recycleAgriculturalProducts[index].quantity,
-                          );
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsets.only(left: 16, top: 16),
-                child: Text(
-                  'Household',
-                  style: TextStyle(
-                    letterSpacing: -0.4,
-                    color: Colors.black,
-                    fontSize: 24,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 300,
-                child: ListView(
-                  shrinkWrap: true,
-                  children: [
-                    SizedBox(
-                      height: 270,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: 4,
-                        itemBuilder: (BuildContext context, int index) {
-                          return ProductDisplayCard(
-                            heading: dummyHouseholdProducts[index].heading,
-                            state: dummyHouseholdProducts[index].state,
-                            quantity: dummyHouseholdProducts[index].quantity,
-                          );
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+        padding: EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SectionTitle(title: 'Agricultural'),
+            ProductList(products: recycleAgriculturalProducts),
+            SectionTitle(title: 'Household'),
+            ProductList(products: dummyHouseholdProducts),
+          ],
         ),
       ),
     );
   }
 }
 
-class ProductDisplayCard extends StatelessWidget {
-  const ProductDisplayCard({super.key, required this.heading, required this.state, required this.quantity});
+class SectionTitle extends StatelessWidget {
+  final String title;
 
-  final String heading;
-  final int quantity;
-  final String state;
+  const SectionTitle({required this.title});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
-      child: Container(
-        width: 157, // Set the desired width for your product cards
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey,
-              blurRadius: 2.0,
-            ),
-          ],
+      padding: EdgeInsets.only(left: 16, top: 16),
+      child: Text(
+        title,
+        style: TextStyle(
+          letterSpacing: -0.4,
+          color: Colors.black,
+          fontSize: 24,
+          fontWeight: FontWeight.w600,
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              height: 157,
-              width: 157,
-              color: Colors.red,
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 8),
-              child: Text(
-                heading,
-                style: const TextStyle(
-                  letterSpacing: -0.4,
-                  color: Colors.grey,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
-                ),
+      ),
+    );
+  }
+}
+
+class ProductList extends StatelessWidget {
+  final List<Product> products;
+
+  const ProductList({required this.products});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 300,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: products.length,
+        itemBuilder: (BuildContext context, int index) {
+          return ProductDisplayCard(product: products[index]);
+        },
+      ),
+    );
+  }
+}
+
+class ProductDisplayCard extends StatelessWidget {
+  final Product product;
+
+  const ProductDisplayCard({required this.product});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 157,
+      margin: EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            blurRadius: 2.0,
+            spreadRadius: 1.0,
+            offset: Offset(0, 1),
+          ),
+        ],
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            height: 157,
+            width: 157,
+            color: Colors.red,
+          ),
+          SizedBox(height: 16),
+          Padding(
+            padding: EdgeInsets.only(left: 8),
+            child: Text(
+              product.heading,
+              style: TextStyle(
+                letterSpacing: -0.4,
+                color: Colors.grey,
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
               ),
             ),
-            const SizedBox(
-              height: 4,
+          ),
+          SizedBox(height: 4),
+          Padding(
+            padding: EdgeInsets.only(left: 8),
+            child: Text(
+              'Qty: ${product.quantity}',
+              style: TextStyle(
+                letterSpacing: -0.4,
+                color: Colors.black,
+                fontSize: 14,
+                fontWeight: FontWeight.w700,
+              ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 8),
+          ),
+          SizedBox(height: 4),
+          Padding(
+            padding: EdgeInsets.only(left: 8, bottom: 8),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.grey,
+                borderRadius: BorderRadius.circular(6),
+              ),
+              padding: EdgeInsets.all(4),
               child: Text(
-                'Qty: $quantity',
-                style: const TextStyle(
+                product.state,
+                style: TextStyle(
                   letterSpacing: -0.4,
-                  color: Colors.black,
-                  fontSize: 14,
+                  color: Colors.white,
+                  fontSize: 12,
                   fontWeight: FontWeight.w700,
                 ),
               ),
             ),
-            const SizedBox(
-              height: 4,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 8, bottom: 8),
-              child: Container(
-                decoration: BoxDecoration(
-                    color: Colors.grey,
-                    border: Border.all(color: Colors.transparent),
-                    borderRadius: BorderRadius.circular(6)),
-                padding: const EdgeInsets.all(4),
-                child: Text(
-                  state,
-                  style: const TextStyle(
-                    letterSpacing: -0.4,
-                    color: Colors.white,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
