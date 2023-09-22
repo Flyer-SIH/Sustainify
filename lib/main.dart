@@ -62,9 +62,7 @@ class MyHomePage extends StatelessWidget {
                           print(screenController.prev);
                           screenController.screen_index.value =
                               screenController.prev;
-                        }
-
-                        ;
+                        };
                       },
                       icon: Icon(
                         screenController.screen_index.value == 5

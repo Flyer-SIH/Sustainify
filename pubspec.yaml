@@ -38,6 +38,7 @@ dependencies:
   animated_bottom_navigation_bar: ^1.2.1
   get: ^4.6.6
   expandable: ^5.0.1
+  google_maps_flutter: ^2.5.0
 
 dev_dependencies:
   flutter_test:
