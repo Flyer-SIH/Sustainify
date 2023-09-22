@@ -1,7 +1,7 @@
 import 'package:expandable/expandable.dart';
 
 import 'package:flutter/material.dart';
-import 'package:sustainify/models.dart';
+import 'package:sustainify/models/item_model.dart';
 import 'package:sustainify/widgets/balance_widget.dart';
 import 'package:sustainify/widgets/total_earnings.dart';
 
