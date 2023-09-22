@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:sustainify/models/blog_model.dart';
 
 class AwarenessScreen extends StatelessWidget {
-  const AwarenessScreen({super.key});
-
+  AwarenessScreen({super.key});
+  final List<Article> articles = [
+    Article(heading: 'Article 1', content: 'Content for Article 1'),
+    Article(heading: 'Article 2', content: 'Content for Article 2'),
+    Article(heading: 'Article 3', content: 'Content for Article 3'),
+    Article(heading: 'Article 4', content: 'Content for Article 4'),
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -10,13 +16,13 @@ class AwarenessScreen extends StatelessWidget {
         title: const Text('Explore'),
       ),
       body: ListView.builder(
-        itemCount: 4,
+        itemCount: articles.length,
         padding: const EdgeInsets.all(16.0),
         itemBuilder: (context, index) {
           return BlogCard(
-            assetImage: '',
-            heading: '',
-            content: '',
+            assetImage: 'blog_image_$index',
+            heading: articles[index].heading,
+            content: articles[index].content,
           );
         },
       ),
