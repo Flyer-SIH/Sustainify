@@ -1,4 +1,4 @@
-import 'models/item_model.dart';
+import '../models/item_model.dart';
 
 List<Item> dummyData = [
   Item(
