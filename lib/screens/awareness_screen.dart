@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sustainify/dummy_data/articles_data.dart';
+import 'package:sustainify/screens/blog_detail_screen.dart';
 
 class AwarenessScreen extends StatelessWidget {
   const AwarenessScreen({super.key});
@@ -14,10 +15,21 @@ class AwarenessScreen extends StatelessWidget {
         itemCount: 4,
         padding: const EdgeInsets.all(16.0),
         itemBuilder: (context, index) {
-          return BlogCard(
-            assetImage: 'assets/images/blogs/$index.jpg',
-            heading: articles[index].heading,
-            content: articles[index].content,
+          return GestureDetector(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => BlogDetailScreen(
+                          assetImage: 'assets/images/blogs/$index.jpg',
+                          heading: articles[index].heading,
+                          content: articles[index].content)));
+            },
+            child: BlogCard(
+              assetImage: 'assets/images/blogs/$index.jpg',
+              heading: articles[index].heading,
+              content: articles[index].content,
+            ),
           );
         },
       ),
