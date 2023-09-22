@@ -11,11 +11,11 @@ class AwarenessScreen extends StatelessWidget {
         title: const Text('Explore'),
       ),
       body: ListView.builder(
-        itemCount: articles.length,
+        itemCount: 4,
         padding: const EdgeInsets.all(16.0),
         itemBuilder: (context, index) {
           return BlogCard(
-            assetImage: 'assets/iamges/blogs/$index.jpg',
+            assetImage: 'assets/images/blogs/$index.jpg',
             heading: articles[index].heading,
             content: articles[index].content,
           );
@@ -56,7 +56,7 @@ class BlogCard extends StatelessWidget {
                 color: Colors.blue,
                 borderRadius: BorderRadius.circular(32),
                 border: Border.all(color: Colors.transparent),
-                image: DecorationImage(image: AssetImage(assetImage), fit: BoxFit.fill),
+                image: DecorationImage(image: AssetImage(assetImage), fit: BoxFit.cover),
               ),
             ),
             Padding(

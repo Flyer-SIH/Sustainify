@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sustainify/Item_Data.dart';
+import 'package:sustainify/dummy_data/item_data.dart';
 import 'package:sustainify/screens/rewards_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
