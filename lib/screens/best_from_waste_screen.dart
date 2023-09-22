@@ -3,22 +3,22 @@ import 'package:sustainify/dummy_data/product_dummy_data.dart';
 import 'package:sustainify/models/product_model.dart';
 
 class BestFromWasteScreen extends StatelessWidget {
-  const BestFromWasteScreen({Key? key});
+  const BestFromWasteScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Best From Waste'),
+        title: const Text('Best From Waste'),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SectionTitle(title: 'Agricultural'),
+            const SectionTitle(title: 'Agricultural'),
             ProductList(products: recycleAgriculturalProducts),
-            SectionTitle(title: 'Household'),
+            const SectionTitle(title: 'Household'),
             ProductList(products: dummyHouseholdProducts),
           ],
         ),
@@ -30,15 +30,15 @@ class BestFromWasteScreen extends StatelessWidget {
 class SectionTitle extends StatelessWidget {
   final String title;
 
-  const SectionTitle({required this.title});
+  const SectionTitle({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: 16, top: 16),
+      padding: const EdgeInsets.only(left: 16, top: 16),
       child: Text(
         title,
-        style: TextStyle(
+        style: const TextStyle(
           letterSpacing: -0.4,
           color: Colors.black,
           fontSize: 24,
@@ -52,7 +52,7 @@ class SectionTitle extends StatelessWidget {
 class ProductList extends StatelessWidget {
   final List<Product> products;
 
-  const ProductList({required this.products});
+  const ProductList({super.key, required this.products});
 
   @override
   Widget build(BuildContext context) {
@@ -72,13 +72,13 @@ class ProductList extends StatelessWidget {
 class ProductDisplayCard extends StatelessWidget {
   final Product product;
 
-  const ProductDisplayCard({required this.product});
+  const ProductDisplayCard({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: 157,
-      margin: EdgeInsets.all(8),
+      margin: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [
@@ -86,7 +86,7 @@ class ProductDisplayCard extends StatelessWidget {
             color: Colors.grey.withOpacity(0.5),
             blurRadius: 2.0,
             spreadRadius: 1.0,
-            offset: Offset(0, 1),
+            offset: const Offset(0, 1),
           ),
         ],
         borderRadius: BorderRadius.circular(8),
@@ -99,12 +99,12 @@ class ProductDisplayCard extends StatelessWidget {
             width: 157,
             color: Colors.red,
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           Padding(
-            padding: EdgeInsets.only(left: 8),
+            padding: const EdgeInsets.only(left: 8),
             child: Text(
               product.heading,
-              style: TextStyle(
+              style: const TextStyle(
                 letterSpacing: -0.4,
                 color: Colors.grey,
                 fontSize: 14,
@@ -112,12 +112,12 @@ class ProductDisplayCard extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 4),
+          const SizedBox(height: 4),
           Padding(
-            padding: EdgeInsets.only(left: 8),
+            padding: const EdgeInsets.only(left: 8),
             child: Text(
               'Qty: ${product.quantity}',
-              style: TextStyle(
+              style: const TextStyle(
                 letterSpacing: -0.4,
                 color: Colors.black,
                 fontSize: 14,
@@ -125,18 +125,18 @@ class ProductDisplayCard extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 4),
+          const SizedBox(height: 4),
           Padding(
-            padding: EdgeInsets.only(left: 8, bottom: 8),
+            padding: const EdgeInsets.only(left: 8, bottom: 8),
             child: Container(
               decoration: BoxDecoration(
                 color: Colors.grey,
                 borderRadius: BorderRadius.circular(6),
               ),
-              padding: EdgeInsets.all(4),
+              padding: const EdgeInsets.all(4),
               child: Text(
                 product.state,
-                style: TextStyle(
+                style: const TextStyle(
                   letterSpacing: -0.4,
                   color: Colors.white,
                   fontSize: 12,
