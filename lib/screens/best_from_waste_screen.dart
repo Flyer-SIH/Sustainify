@@ -7,80 +7,82 @@ class BestFromWasteScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(0, 32, 16, 0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Padding(
-              padding: EdgeInsets.only(left: 16),
-              child: Text(
-                'Agricultural',
-                style: TextStyle(
-                  letterSpacing: -0.4,
-                  color: Colors.black,
-                  fontSize: 24,
-                  fontWeight: FontWeight.w600,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(0, 42, 16, 0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Padding(
+                padding: EdgeInsets.only(left: 16),
+                child: Text(
+                  'Agricultural',
+                  style: TextStyle(
+                    letterSpacing: -0.4,
+                    color: Colors.black,
+                    fontSize: 24,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
-            ),
-            SizedBox(
-              height: 300, // Set the desired height for your product cards
-              child: ListView(
-                shrinkWrap: true,
-                children: [
-                  SizedBox(
-                    height: 270, // Set the overall height of your BestFromWasteScreen
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal, // Enable horizontal scrolling
-                      itemCount: 4,
-                      itemBuilder: (BuildContext context, int index) {
-                        return ProductDisplayCard(
-                          heading: recycleAgriculturalProducts[index].heading,
-                          state: recycleAgriculturalProducts[index].state,
-                          quantity: recycleAgriculturalProducts[index].quantity,
-                        );
-                      },
+              SizedBox(
+                height: 300, // Set the desired height for your product cards
+                child: ListView(
+                  shrinkWrap: true,
+                  children: [
+                    SizedBox(
+                      height: 270, // Set the overall height of your BestFromWasteScreen
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal, // Enable horizontal scrolling
+                        itemCount: 4,
+                        itemBuilder: (BuildContext context, int index) {
+                          return ProductDisplayCard(
+                            heading: recycleAgriculturalProducts[index].heading,
+                            state: recycleAgriculturalProducts[index].state,
+                            quantity: recycleAgriculturalProducts[index].quantity,
+                          );
+                        },
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.only(left: 16, top: 16),
-              child: Text(
-                'Household',
-                style: TextStyle(
-                  letterSpacing: -0.4,
-                  color: Colors.black,
-                  fontSize: 24,
-                  fontWeight: FontWeight.w600,
+                  ],
                 ),
               ),
-            ),
-            SizedBox(
-              height: 300,
-              child: ListView(
-                shrinkWrap: true,
-                children: [
-                  SizedBox(
-                    height: 270,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 4,
-                      itemBuilder: (BuildContext context, int index) {
-                        return ProductDisplayCard(
-                          heading: dummyHouseholdProducts[index].heading,
-                          state: dummyHouseholdProducts[index].state,
-                          quantity: dummyHouseholdProducts[index].quantity,
-                        );
-                      },
-                    ),
+              const Padding(
+                padding: EdgeInsets.only(left: 16, top: 16),
+                child: Text(
+                  'Household',
+                  style: TextStyle(
+                    letterSpacing: -0.4,
+                    color: Colors.black,
+                    fontSize: 24,
+                    fontWeight: FontWeight.w600,
                   ),
-                ],
+                ),
               ),
-            ),
-          ],
+              SizedBox(
+                height: 300,
+                child: ListView(
+                  shrinkWrap: true,
+                  children: [
+                    SizedBox(
+                      height: 270,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: 4,
+                        itemBuilder: (BuildContext context, int index) {
+                          return ProductDisplayCard(
+                            heading: dummyHouseholdProducts[index].heading,
+                            state: dummyHouseholdProducts[index].state,
+                            quantity: dummyHouseholdProducts[index].quantity,
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -97,7 +99,7 @@ class ProductDisplayCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
       child: Container(
         width: 157, // Set the desired width for your product cards
         decoration: const BoxDecoration(
