@@ -15,7 +15,7 @@ class AwarenessScreen extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         itemBuilder: (context, index) {
           return BlogCard(
-            assetImage: 'blog_image_$index',
+            assetImage: 'assets/iamges/blogs/$index.jpg',
             heading: articles[index].heading,
             content: articles[index].content,
           );
