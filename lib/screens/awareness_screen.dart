@@ -13,6 +13,7 @@ class AwarenessScreen extends StatelessWidget {
         itemCount: 4,
         padding: const EdgeInsets.all(16.0),
         itemBuilder: (context, index) {
+
           return BlogCard(
             assetImage: '',
             heading: '',
