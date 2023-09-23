@@ -8,23 +8,25 @@ import 'package:sustainify/controllers/screen_controller.dart';
 
 class MapScreen extends StatelessWidget {
   MapScreen({super.key});
-  final Completer<GoogleMapController> _controller = Completer();
-  CameraPosition _cameraPosition = CameraPosition(target: LatLng(28.4506465, 77.5841978), zoom: 7);
-  var controller = Get.find<ScreenController>();
 
+  CameraPosition _cameraPosition =
+      CameraPosition(target: LatLng(45.521563, -122.677433), zoom: 11);
+  var screenController = Get.find<ScreenController>();
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: GoogleMap(
-        zoomControlsEnabled: true,
-        initialCameraPosition: _cameraPosition,
-        mapType: MapType.terrain,
-        onMapCreated: (GoogleMapController controller) {
-        _controller.complete(controller);
-        },
-        markers: Set<Marker>.of(controller.markers.values),
+      child: Obx(
+        () => GoogleMap(
+          zoomControlsEnabled: true,
+          initialCameraPosition: _cameraPosition,
+          mapType: MapType.terrain,
+          onMapCreated: (GoogleMapController controller) {
+            screenController.mapController = controller;
+          },
+          markers: Set<Marker>.of(screenController.markers.value.values),
         ),
+      ),
     );
   }
 }
