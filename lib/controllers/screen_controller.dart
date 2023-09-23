@@ -12,6 +12,8 @@ class ScreenController extends GetxController {
   late RxMap<MarkerId, Marker> markers = {
     MarkerId("initial"): const Marker(markerId: MarkerId("Hello World"))
   }.obs;
+  CameraPosition cameraPosition =
+      CameraPosition(target: LatLng(45.521563, -122.677433), zoom: 11);
   var image;
   int prev = 0;
 
@@ -40,6 +42,7 @@ class ScreenController extends GetxController {
       LatLng newlatlang = LatLng(28.4506, 77.5842);
       mapController?.animateCamera(CameraUpdate.newCameraPosition(
           CameraPosition(target: newlatlang, zoom: 10)));
+      cameraPosition = CameraPosition(target: newlatlang, zoom: 10);
     });
   }
 

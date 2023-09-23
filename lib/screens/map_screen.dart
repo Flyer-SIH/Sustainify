@@ -8,9 +8,6 @@ import 'package:sustainify/controllers/screen_controller.dart';
 
 class MapScreen extends StatelessWidget {
   MapScreen({super.key});
-
-  CameraPosition _cameraPosition =
-      CameraPosition(target: LatLng(45.521563, -122.677433), zoom: 11);
   var screenController = Get.find<ScreenController>();
 
   @override
@@ -19,7 +16,7 @@ class MapScreen extends StatelessWidget {
       child: Obx(
         () => GoogleMap(
           zoomControlsEnabled: true,
-          initialCameraPosition: _cameraPosition,
+          initialCameraPosition: screenController.cameraPosition,
           mapType: MapType.terrain,
           onMapCreated: (GoogleMapController controller) {
             screenController.mapController = controller;
