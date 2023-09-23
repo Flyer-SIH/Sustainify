@@ -11,6 +11,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 class ScreenController extends GetxController {
   Rx<int> screen_index = 2.obs;
   late GoogleMapController mapController;
+  late LocationPermission permission;
+  late Position position;
   late RxMap<MarkerId, Marker> markers = {
     MarkerId("initial"): const Marker(markerId: MarkerId("Hello World"))
   }.obs;
@@ -26,19 +28,31 @@ class ScreenController extends GetxController {
     super.onInit();
     await setImage();
 
-    LocationPermission permission;
+    //Get User Location
     permission = await Geolocator.requestPermission();
-    Position position = await Geolocator.getCurrentPosition(
+    position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
+  
+    getRecycleCenter();
+  }
+
+
+
+  Future<void> getRecycleCenter() async {
+
+    //Generate URL
     var url =
         'https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=recycle&location=${position.latitude.toString()}%2C${position.longitude.toString()}&radius=50000&key=AIzaSyCwYWsLSig5gbymNTstLvy35b7XG_GG72Q';
     print(url);
     var request = http.Request('GET', Uri.parse(url));
+
+    //Make call for fetching
     http.StreamedResponse response = await request.send();
 
     if (response.statusCode == 200) {
       var pos = jsonDecode(await response.stream.bytesToString());
       pos = pos["results"];
+      // format required data
       for (var x in pos) {
         data.add({
           x["name"]: [
@@ -47,15 +61,19 @@ class ScreenController extends GetxController {
           ]
         });
       }
-    setRecycleCenterMarkers(data);
-    LatLng newlatlang = LatLng(position.latitude, position.longitude);
-    mapController?.animateCamera(CameraUpdate.newCameraPosition(
-      CameraPosition(target: newlatlang, zoom: 10)));
-    cameraPosition = CameraPosition(target: newlatlang, zoom: 10);
+      // set Markers from data
+      setRecycleCenterMarkers(data);
+
+      LatLng newlatlang = LatLng(position.latitude, position.longitude);
+      // Navigate to users current location
+      mapController?.animateCamera(CameraUpdate.newCameraPosition(
+          CameraPosition(target: newlatlang, zoom: 10)));
+
+      // set new camera position as users current location
+      cameraPosition = CameraPosition(target: newlatlang, zoom: 10);
     } else {
       print(response.reasonPhrase);
     }
-
   }
 
   Future<Uint8List> getBytesFromAsset(String path, int width) async {
