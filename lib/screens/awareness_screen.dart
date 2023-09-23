@@ -53,10 +53,17 @@ class _AwarenessScreenState extends State<AwarenessScreen> {
                       ),
                     );
                   },
-                  child: BlogCard(
-                    networkImage: article.urlToImage,
-                    heading: article.title,
-                    content: article.description,
+                  child: Column(
+                    children: [
+                      BlogCard(
+                        networkImage: article.urlToImage,
+                        heading: article.title,
+                        content: article.description,
+                      ),
+                      SizedBox(
+                        height: 5,
+                      )
+                    ],
                   ),
                 );
               },
@@ -71,7 +78,11 @@ class _AwarenessScreenState extends State<AwarenessScreen> {
 }
 
 class BlogCard extends StatelessWidget {
-  const BlogCard({super.key, required this.networkImage, required this.heading, required this.content});
+  const BlogCard(
+      {super.key,
+      required this.networkImage,
+      required this.heading,
+      required this.content});
 
   final String? networkImage;
   final String? heading;
@@ -83,7 +94,7 @@ class BlogCard extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 16),
       child: Container(
         decoration: BoxDecoration(
-            color: Colors.white,
+            color: Color.fromARGB(255, 255, 218, 181),
             borderRadius: BorderRadius.circular(32),
             border: Border.all(color: Colors.transparent),
             boxShadow: const [
@@ -97,12 +108,13 @@ class BlogCard extends StatelessWidget {
           children: [
             if (networkImage != null)
               Container(
-                height: 80,
+                height: 100,
                 decoration: BoxDecoration(
                   color: Colors.blue,
                   borderRadius: BorderRadius.circular(32),
                   border: Border.all(color: Colors.transparent),
-                  image: DecorationImage(image: NetworkImage(networkImage!), fit: BoxFit.cover),
+                  image: DecorationImage(
+                      image: NetworkImage(networkImage!), fit: BoxFit.cover),
                 ),
               ),
             if (heading != null)
@@ -113,7 +125,8 @@ class BlogCard extends StatelessWidget {
                   children: [
                     Text(
                       heading!,
-                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                      style: const TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.w600),
                     ),
                     const SizedBox(
                       height: 8,
