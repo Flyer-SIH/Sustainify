@@ -21,14 +21,14 @@ class AwarenessScreen extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                       builder: (context) => BlogDetailScreen(
-                          assetImage: 'assets/images/blogs/$index.jpg',
-                          heading: articles[index].heading,
-                          content: articles[index].content)));
+                          networkImage: details[index].photo,
+                          heading: details[index].title,
+                          content: details[index].about)));
             },
             child: BlogCard(
-              assetImage: 'assets/images/blogs/$index.jpg',
-              heading: articles[index].heading,
-              content: articles[index].content,
+              networkImage: details[index].photo,
+              heading: details[index].title,
+              content: details[index].about,
             ),
           );
         },
@@ -38,9 +38,9 @@ class AwarenessScreen extends StatelessWidget {
 }
 
 class BlogCard extends StatelessWidget {
-  const BlogCard({super.key, required this.assetImage, required this.heading, required this.content});
+  const BlogCard({super.key, required this.networkImage, required this.heading, required this.content});
 
-  final String assetImage;
+  final String networkImage;
   final String heading;
   final String content;
 
@@ -68,7 +68,7 @@ class BlogCard extends StatelessWidget {
                 color: Colors.blue,
                 borderRadius: BorderRadius.circular(32),
                 border: Border.all(color: Colors.transparent),
-                image: DecorationImage(image: AssetImage(assetImage), fit: BoxFit.cover),
+                image: DecorationImage(image: NetworkImage(networkImage), fit: BoxFit.cover),
               ),
             ),
             Padding(

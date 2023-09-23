@@ -1,6 +1,10 @@
-class Article {
-  String heading;
-  String content;
+import 'package:flutter/material.dart';
 
-  Article({required this.heading, required this.content});
+class Detail {
+  String photo;
+  String title;
+  String about;
+  String methods;
+
+  Detail({required this.photo, required this.title, required this.about, required this.methods});
 }

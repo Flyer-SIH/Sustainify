@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class BlogDetailScreen extends StatelessWidget {
-  const BlogDetailScreen({super.key, required this.assetImage, required this.heading, required this.content});
+  const BlogDetailScreen({super.key, required this.networkImage, required this.heading, required this.content});
 
-  final String assetImage;
+  final String networkImage;
   final String heading;
   final String content;
 
@@ -15,8 +15,8 @@ class BlogDetailScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          Image.asset(
-            assetImage,
+          Image.network(
+            networkImage,
           ),
           const SizedBox(
             height: 8,
