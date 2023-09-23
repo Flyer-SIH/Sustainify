@@ -21,9 +21,11 @@ class AwarenessScreen extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                       builder: (context) => BlogDetailScreen(
-                          networkImage: details[index].photo,
-                          heading: details[index].title,
-                          content: details[index].about)));
+                            networkImage: details[index].photo,
+                            heading: details[index].title,
+                            content: details[index].about,
+                            method: details[index].methods,
+                          )));
             },
             child: BlogCard(
               networkImage: details[index].photo,
