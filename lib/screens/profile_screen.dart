@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sustainify/dummy_data/item_data.dart';
 import 'package:sustainify/screens/information_screen.dart';
 import 'package:sustainify/screens/rewards_screen.dart';
+import 'package:sustainify/widgets/custom_app_bar.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -10,8 +11,8 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Color tPrimaryColor = Colors.black;
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Profile', style: TextStyle(fontSize: 24)),
+      appBar: CustomAppBar(
+        title: 'Profile',
       ),
       body: SingleChildScrollView(
         child: Container(

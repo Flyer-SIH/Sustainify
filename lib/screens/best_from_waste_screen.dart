@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sustainify/dummy_data/product_dummy_data.dart';
 import 'package:sustainify/models/product_model.dart';
+import 'package:sustainify/widgets/custom_app_bar.dart';
 
 class BestFromWasteScreen extends StatelessWidget {
   const BestFromWasteScreen({super.key});
@@ -8,9 +9,7 @@ class BestFromWasteScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Best From Waste'),
-      ),
+      appBar: const CustomAppBar(title: 'Best From Waste'),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(

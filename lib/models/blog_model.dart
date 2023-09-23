@@ -1,10 +1,8 @@
-import 'package:flutter/material.dart';
-
 class Detail {
   String photo;
   String title;
   String about;
-  String methods;
+  String? methods;
 
-  Detail({required this.photo, required this.title, required this.about, required this.methods});
+  Detail({required this.photo, required this.title, required this.about, this.methods});
 }
