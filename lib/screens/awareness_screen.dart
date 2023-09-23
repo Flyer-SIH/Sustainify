@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sustainify/dummy_data/articles_data.dart';
 import 'package:sustainify/screens/blog_detail_screen.dart';
+import 'package:sustainify/widgets/custom_app_bar.dart';
 
 class AwarenessScreen extends StatelessWidget {
   const AwarenessScreen({super.key});
@@ -8,8 +9,8 @@ class AwarenessScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Explore'),
+      appBar: CustomAppBar(
+        title: 'Explore',
       ),
       body: ListView.builder(
         itemCount: 4,

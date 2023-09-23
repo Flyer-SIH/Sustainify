@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:sustainify/widgets/custom_app_bar.dart';
 
 class Product {
   final String barcode;
@@ -63,8 +64,8 @@ class _ScanProductScreenState extends State<ScanProductScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Product Scanner'),
+      appBar: CustomAppBar(
+        title: 'Product Scanner',
       ),
       body: Center(
         child: Column(
