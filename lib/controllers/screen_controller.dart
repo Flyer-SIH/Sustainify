@@ -1,6 +1,8 @@
+import 'dart:convert';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'dart:ui';
+import 'package:http/http.dart' as http;
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:get/get.dart';
@@ -9,6 +11,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 class ScreenController extends GetxController {
   Rx<int> screen_index = 2.obs;
   late GoogleMapController mapController;
+  late LocationPermission permission;
+  late Position position;
   late RxMap<MarkerId, Marker> markers = {
     MarkerId("initial"): const Marker(markerId: MarkerId("Hello World"))
   }.obs;
@@ -17,37 +21,59 @@ class ScreenController extends GetxController {
   var image;
   int prev = 0;
 
-  var data = [
-    {
-      "Name": [28.4506, 77.5842]
-    },
-    {
-      "Name 1": [28.5439, 77.3331]
-    },
-    {
-      "Name 2": [28.4731, 77.4829]
-    },
-    {
-      "Name 3": [28.4597, 77.4991]
-    }
-  ];
+  var data = [];
 
   @override
   void onInit() async {
     super.onInit();
     await setImage();
 
-    LocationPermission permission;
+    //Get User Location
     permission = await Geolocator.requestPermission();
-    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+  
+    getRecycleCenter();
+  }
 
-    Future.delayed(Duration(seconds: 8), () {
+
+
+  Future<void> getRecycleCenter() async {
+
+    //Generate URL
+    var url =
+        'https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=recycle&location=${position.latitude.toString()}%2C${position.longitude.toString()}&radius=50000&key=AIzaSyCwYWsLSig5gbymNTstLvy35b7XG_GG72Q';
+    print(url);
+    var request = http.Request('GET', Uri.parse(url));
+
+    //Make call for fetching
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      var pos = jsonDecode(await response.stream.bytesToString());
+      pos = pos["results"];
+      // format required data
+      for (var x in pos) {
+        data.add({
+          x["name"]: [
+            x["geometry"]["location"]["lat"],
+            x["geometry"]["location"]["lng"]
+          ]
+        });
+      }
+      // set Markers from data
       setRecycleCenterMarkers(data);
+
       LatLng newlatlang = LatLng(position.latitude, position.longitude);
+      // Navigate to users current location
       mapController?.animateCamera(CameraUpdate.newCameraPosition(
           CameraPosition(target: newlatlang, zoom: 10)));
+
+      // set new camera position as users current location
       cameraPosition = CameraPosition(target: newlatlang, zoom: 10);
-    });
+    } else {
+      print(response.reasonPhrase);
+    }
   }
 
   Future<Uint8List> getBytesFromAsset(String path, int width) async {
