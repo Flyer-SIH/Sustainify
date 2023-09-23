@@ -36,6 +36,9 @@ class ScreenController extends GetxController {
   void onInit() async {
     super.onInit();
     await setImage();
+
+    LocationPermission permission;
+    permission = await Geolocator.requestPermission();
     Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
 
     Future.delayed(Duration(seconds: 8), () {

@@ -54,20 +54,23 @@ class MyHomePage extends StatelessWidget {
                   child: IconButton(
                       onPressed: () {
                         if (screenController.screen_index.value != 5) {
-                          screenController.prev = screenController.screen_index.value;
+                          screenController.prev =
+                              screenController.screen_index.value;
                           print(screenController.prev);
                           screenController.screen_index.value = 5;
                         } else {
                           print(screenController.prev);
-                          screenController.screen_index.value = screenController.prev;
+                          screenController.screen_index.value =
+                              screenController.prev;
                         }
-
-                        ;
                       },
                       icon: Icon(
-                        screenController.screen_index.value == 5 ? Icons.notifications_on : Icons.notifications,
-                        color:
-                            screenController.screen_index.value == 5 ? Colors.brown : Color.fromARGB(255, 69, 71, 69),
+                        screenController.screen_index.value == 5
+                            ? Icons.notifications_on
+                            : Icons.notifications,
+                        color: screenController.screen_index.value == 5
+                            ? Colors.brown
+                            : Color.fromARGB(255, 69, 71, 69),
                       )),
                 ),
               ],
@@ -99,7 +102,12 @@ class MyHomePage extends StatelessWidget {
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: AnimatedBottomNavigationBar(
-          icons: [Icons.newspaper, Icons.recycling_rounded, Icons.location_on, Icons.person_2_rounded],
+          icons: [
+            Icons.newspaper,
+            Icons.recycling_rounded,
+            Icons.location_on,
+            Icons.person_2_rounded
+          ],
           activeIndex: screenController.screen_index.value,
           activeColor: Colors.brown,
           inactiveColor: Color.fromARGB(255, 69, 71, 69),
