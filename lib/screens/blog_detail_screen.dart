@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 class BlogDetailScreen extends StatelessWidget {
   const BlogDetailScreen({
     Key? key,
-    required this.networkImage,
-    required this.heading,
-    required this.content,
-    this.method,
+    this.networkImage,
+    this.heading,
+    this.content,
+    this.description,
   }) : super(key: key);
 
-  final String networkImage;
-  final String heading;
-  final String content;
-  final String? method;
+  final String? networkImage;
+  final String? heading;
+  final String? content;
+  final String? description;
 
   void _shareBlog(BuildContext context) {
     // Add code to share the blog content here
@@ -47,50 +47,22 @@ class BlogDetailScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.network(
-              networkImage,
-              height: 200, // Adjust the image height as needed
-              width: double.infinity, // Make the image take the full width
-              fit: BoxFit.cover, // Cover the entire image container
-            ),
+            if (networkImage != null)
+              Image.network(
+                networkImage!,
+                height: 200, // Adjust the image height as needed
+                width: double.infinity, // Make the image take the full width
+                fit: BoxFit.cover, // Cover the entire image container
+              ),
             const SizedBox(
               height: 16,
             ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
-                heading,
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 22,
-                  fontWeight: FontWeight.w700,
-                  letterSpacing: -0.4,
-                  height: 1.3,
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
-                content.isEmpty ? 'No content available.' : content,
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w400,
-                  letterSpacing: -0.36,
-                ),
-              ),
-            ),
-            if (method != null) ...[
-              const Divider(), // Horizontal line separator
-              const Padding(
-                padding: EdgeInsets.all(16.0),
+            if (heading != null)
+              Padding(
+                padding: const EdgeInsets.all(16.0),
                 child: Text(
-                  'Methods -',
-                  style: TextStyle(
+                  heading!,
+                  style: const TextStyle(
                     color: Colors.black,
                     fontSize: 22,
                     fontWeight: FontWeight.w700,
@@ -99,10 +71,28 @@ class BlogDetailScreen extends StatelessWidget {
                   ),
                 ),
               ),
+            const SizedBox(
+              height: 16,
+            ),
+            if (content != null)
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Text(
-                  method!,
+                  content!,
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w400,
+                    letterSpacing: -0.36,
+                  ),
+                ),
+              ),
+            if (description != null) ...[
+              const Divider(), // Horizontal line separator
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text(
+                  description!,
                   style: const TextStyle(
                     color: Colors.black,
                     fontSize: 18,
