@@ -16,20 +16,6 @@ List<Detail> details = [
     ''',
   ),
   Detail(
-    photo:
-        "https://www.google.com/url?sa=i&url=https%3A%2F%2Fcelitron.com%2Fen%2Fbiomedical-waste-management-disposal-methods&psig=AOvVaw3XS9sOk-GeKnhTknRnMe9d&ust=1649673997323000&source=images&cd=vfe&ved=0CAoQjRxqFwoTCLCEmd6oifcCFQAAAAAdAAAAABAD",
-    title: 'Biological Waste',
-    about:
-        'Biological waste is defined as infectious waste, pathological waste, chemotherapy waste and the receptacles and supplies generated during its handling and/or storage. It is further defined as waste that, because of its quantity, character or composition, has been determined to require special handling.',
-    methods: '''
-    - Deep burial
-    - Autoclave and microwave treatment
-    - Shredding
-    - Land disposal : Secured/Sanitary landfill
-    - Incinerator
-    ''',
-  ),
-  Detail(
     photo: "https://www.pdsigns.ie/contentFiles/productImages/Large/RWSW3.jpg",
     title: 'Brown Glass Waste',
     about:
