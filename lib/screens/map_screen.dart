@@ -1,12 +1,29 @@
+import 'dart:async';
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:sustainify/controllers/screen_controller.dart';
 
 class MapScreen extends StatelessWidget {
-  const MapScreen({super.key});
+  MapScreen({super.key});
+  var screenController = Get.find<ScreenController>();
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Center(child: Text("This is Map Screen")),
+      child: Obx(
+        () => GoogleMap(
+          zoomControlsEnabled: true,
+          initialCameraPosition: screenController.cameraPosition,
+          mapType: MapType.terrain,
+          onMapCreated: (GoogleMapController controller) {
+            screenController.mapController = controller;
+          },
+          markers: Set<Marker>.of(screenController.markers.value.values),
+        ),
+      ),
     );
   }
 }
