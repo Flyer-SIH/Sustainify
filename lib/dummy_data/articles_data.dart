@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:sustainify/models/blog_model.dart';
 
 List<Detail> details = [
