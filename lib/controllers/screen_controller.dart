@@ -55,7 +55,7 @@ class ScreenController extends GetxController {
 
   Future<void> setImage() async {
     Uint8List markerIcon =
-        await getBytesFromAsset('assets/images/recycleMark.png', 300);
+        await getBytesFromAsset('assets/images/recycleMark.png', 100);
     image = BitmapDescriptor.fromBytes(markerIcon);
   }
 
