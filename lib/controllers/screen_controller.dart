@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'dart:ui';
-
+import 'package:geolocator/geolocator.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -36,10 +36,11 @@ class ScreenController extends GetxController {
   void onInit() async {
     super.onInit();
     await setImage();
+    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
 
     Future.delayed(Duration(seconds: 8), () {
       setRecycleCenterMarkers(data);
-      LatLng newlatlang = LatLng(28.4506, 77.5842);
+      LatLng newlatlang = LatLng(position.latitude, position.longitude);
       mapController?.animateCamera(CameraUpdate.newCameraPosition(
           CameraPosition(target: newlatlang, zoom: 10)));
       cameraPosition = CameraPosition(target: newlatlang, zoom: 10);

@@ -40,6 +40,7 @@ dependencies:
   expandable: ^5.0.1
   flutter_barcode_scanner: ^2.0.0
   google_maps_flutter: ^2.5.0
+  geolocator: ^10.1.0
 
 dev_dependencies:
   flutter_test:
