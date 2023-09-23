@@ -1,6 +1,8 @@
+import 'dart:convert';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'dart:ui';
+import 'package:http/http.dart' as http;
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:get/get.dart';
@@ -17,20 +19,7 @@ class ScreenController extends GetxController {
   var image;
   int prev = 0;
 
-  var data = [
-    {
-      "Name": [28.4506, 77.5842]
-    },
-    {
-      "Name 1": [28.5439, 77.3331]
-    },
-    {
-      "Name 2": [28.4731, 77.4829]
-    },
-    {
-      "Name 3": [28.4597, 77.4991]
-    }
-  ];
+  var data = [];
 
   @override
   void onInit() async {
@@ -39,15 +28,34 @@ class ScreenController extends GetxController {
 
     LocationPermission permission;
     permission = await Geolocator.requestPermission();
-    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    var url =
+        'https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=recycle&location=${position.latitude.toString()}%2C${position.longitude.toString()}&radius=50000&key=AIzaSyCwYWsLSig5gbymNTstLvy35b7XG_GG72Q';
+    print(url);
+    var request = http.Request('GET', Uri.parse(url));
+    http.StreamedResponse response = await request.send();
 
-    Future.delayed(Duration(seconds: 8), () {
-      setRecycleCenterMarkers(data);
-      LatLng newlatlang = LatLng(position.latitude, position.longitude);
-      mapController?.animateCamera(CameraUpdate.newCameraPosition(
-          CameraPosition(target: newlatlang, zoom: 10)));
-      cameraPosition = CameraPosition(target: newlatlang, zoom: 10);
-    });
+    if (response.statusCode == 200) {
+      var pos = jsonDecode(await response.stream.bytesToString());
+      pos = pos["results"];
+      for (var x in pos) {
+        data.add({
+          x["name"]: [
+            x["geometry"]["location"]["lat"],
+            x["geometry"]["location"]["lng"]
+          ]
+        });
+      }
+    setRecycleCenterMarkers(data);
+    LatLng newlatlang = LatLng(position.latitude, position.longitude);
+    mapController?.animateCamera(CameraUpdate.newCameraPosition(
+      CameraPosition(target: newlatlang, zoom: 10)));
+    cameraPosition = CameraPosition(target: newlatlang, zoom: 10);
+    } else {
+      print(response.reasonPhrase);
+    }
+
   }
 
   Future<Uint8List> getBytesFromAsset(String path, int width) async {
