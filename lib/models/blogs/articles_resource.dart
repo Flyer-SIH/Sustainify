@@ -11,7 +11,7 @@ Future<List<Articles>> fetchArticles() async {
     final List<dynamic> articleList = jsonResponse['articles'];
 
     return articleList.map((article) => Articles.fromJson(article)).toList();
-  } else {
+  } else { 
     throw Exception('Failed to load articles');
   }
 }
