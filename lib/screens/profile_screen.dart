@@ -27,7 +27,9 @@ class ProfileScreen extends StatelessWidget {
                     height: 120,
                     child: ClipRRect(
                         borderRadius: BorderRadius.circular(100),
-                        child: const Image(image: NetworkImage('https://picsum.photos/250?image=9'))),
+                        child: const Image(
+                            image: NetworkImage(
+                                'https://picsum.photos/250?image=9'))),
                   ),
                   Positioned(
                     bottom: 0,
@@ -35,7 +37,9 @@ class ProfileScreen extends StatelessWidget {
                     child: Container(
                       width: 35,
                       height: 35,
-                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(100), color: tPrimaryColor),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                          color: tPrimaryColor),
                       child: const Icon(
                         Icons.edit,
                         color: Colors.white,
@@ -46,8 +50,10 @@ class ProfileScreen extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 10),
-              Text('Daksh Vasudev', style: Theme.of(context).textTheme.headline4),
-              Text('Software Developer', style: Theme.of(context).textTheme.bodyText2),
+              Text('Daksh Vasudev',
+                  style: Theme.of(context).textTheme.headline4),
+              Text('Software Developer',
+                  style: Theme.of(context).textTheme.bodyText2),
               const SizedBox(height: 20),
 
               /// -- BUTTON
@@ -56,10 +62,15 @@ class ProfileScreen extends StatelessWidget {
                 child: ElevatedButton(
                   // onPressed: () => Get.to(() => const UpdateProfileScreen()),
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: tPrimaryColor, side: BorderSide.none, shape: const StadiumBorder()),
+                      backgroundColor: tPrimaryColor,
+                      side: BorderSide.none,
+                      shape: const StadiumBorder()),
                   onPressed: () {},
                   child: const SizedBox(
-                      height: 45, child: Center(child: Text('Edit Profile', style: TextStyle(color: Colors.white)))),
+                      height: 45,
+                      child: Center(
+                          child: Text('Edit Profile',
+                              style: TextStyle(color: Colors.white)))),
                 ),
               ),
               const SizedBox(height: 30),
@@ -67,21 +78,30 @@ class ProfileScreen extends StatelessWidget {
               const SizedBox(height: 10),
 
               /// -- MENU
-              ProfileMenuWidget(title: "Settings", icon: Icons.settings, onPress: () {}),
+              ProfileMenuWidget(
+                  title: "Settings", icon: Icons.settings, onPress: () {}),
               ProfileMenuWidget(
                   title: "Rewards",
                   icon: Icons.wallet,
                   onPress: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => RewardsScreen(items: dummyData)));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                RewardsScreen(items: dummyData)));
                   }),
-              ProfileMenuWidget(title: "User Management", icon: Icons.person, onPress: () {}),
+              ProfileMenuWidget(
+                  title: "Organisation",
+                  icon: Icons.group_rounded,
+                  onPress: () {}),
               const Divider(),
               const SizedBox(height: 10),
               ProfileMenuWidget(
                   title: "Information",
                   icon: Icons.info,
                   onPress: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => AboutApp()));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => AboutApp()));
                   }),
             ],
           ),
@@ -120,7 +140,9 @@ class ProfileMenuWidget extends StatelessWidget {
         ),
         child: Icon(icon, color: Colors.black),
       ),
-      title: Text(title, style: Theme.of(context).textTheme.bodyText1?.apply(color: textColor)),
+      title: Text(title,
+          style:
+              Theme.of(context).textTheme.bodyText1?.apply(color: textColor)),
       trailing: endIcon
           ? Container(
               width: 30,
@@ -129,7 +151,8 @@ class ProfileMenuWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(100),
                 color: Colors.grey.withOpacity(0.1),
               ),
-              child: const Icon(Icons.arrow_forward, size: 18.0, color: Colors.grey))
+              child: const Icon(Icons.arrow_forward,
+                  size: 18.0, color: Colors.grey))
           : null,
     );
   }
