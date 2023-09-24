@@ -1,9 +1,11 @@
+
 import 'package:flutter/material.dart';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'bindings/initial_bindings.dart';
 import 'controllers/screen_controller.dart';
 import 'screens/awareness_screen.dart';
 import 'screens/best_from_waste_screen.dart';
+import 'screens/display_picture_screen.dart';
 import 'screens/map_screen.dart';
 import 'screens/notification_screen.dart';
 import 'screens/profile_screen.dart';
@@ -26,7 +28,7 @@ class MyApp extends StatelessWidget {
         initialRoute: "/home",
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(
-              seedColor: const Color.fromARGB(1, 150, 75, 0)),
+              seedColor: const Color.fromARGB(255, 150, 75, 0)),
         ),
         routes: {
           '/home': (context) => MyHomePage(),
@@ -90,12 +92,22 @@ class MyHomePage extends StatelessWidget {
                               : NotificationScreen(),
         ]),
         floatingActionButton: FloatingActionButton(
-          child: Icon(
-            Icons.qr_code_scanner,
-            color: Colors.white,
-          ),
-          onPressed: () {
+          child: screenController.screen_index.value == 4
+              ? Icon(
+                  Icons.camera_rounded,
+                  color: Colors.white,
+                ): Icon(
+                      Icons.qr_code_scanner,
+                      color: Colors.white,
+                    ),
+          onPressed: () async {
             print("help");
+            if (screenController.screen_index.value == 4) {
+              print("index 4 help");
+              screenController.pic =
+                  await screenController.cameraController.value.takePicture();
+              Get.to(DisplayPicture());
+            }
             screenController.screen_index.value = 4;
           },
           backgroundColor: Color.fromARGB(255, 150, 75, 0),
