@@ -1,79 +1,71 @@
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:sustainify/models/blogs/articles_resource.dart';
+import 'package:get/get.dart';
+import 'package:sustainify/controllers/screen_controller.dart';
 import 'package:sustainify/models/blogs/models.dart';
 import 'package:sustainify/screens/blog_detail_screen.dart';
 import 'package:sustainify/widgets/custom_app_bar.dart';
 
-class AwarenessScreen extends StatefulWidget {
-  const AwarenessScreen({Key? key}) : super(key: key);
+class AwarenessScreen extends StatelessWidget {
+  AwarenessScreen({super.key});
 
-  @override
-  _AwarenessScreenState createState() => _AwarenessScreenState();
-}
-
-class _AwarenessScreenState extends State<AwarenessScreen> {
-  late Future<List<Articles>> futureArticles;
-
-  @override
-  void initState() {
-    super.initState();
-    // Fetch the list of articles when the widget initializes
-    futureArticles = fetchArticles();
-  }
+  ScreenController screenController = Get.find<ScreenController>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(
-        title: 'Explore',
-      ),
-      body: FutureBuilder<List<Articles>>(
-        future: futureArticles,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasData) {
-            final articles = snapshot.data;
-            return ListView.builder(
-              itemCount: articles!.length,
-              padding: const EdgeInsets.all(16.0),
-              itemBuilder: (context, index) {
-                final article = articles[index];
-                return GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => BlogDetailScreen(
+        appBar: const CustomAppBar(
+          title: 'Explore',
+        ),
+        body: FutureBuilder<List<Articles>>(
+          future: screenController.fetchedArticles,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: LoadingAnimationWidget.dotsTriangle(
+                    color: Color.fromARGB(255, 150, 75, 0), size: 30),
+              );
+            } else if (snapshot.hasData) {
+              final articles = snapshot.data;
+              return ListView.builder(
+                itemCount: articles!.length,
+                padding: const EdgeInsets.all(16.0),
+                itemBuilder: (context, index) {
+                  final article = articles[index];
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => BlogDetailScreen(
+                            networkImage: article.urlToImage,
+                            heading: article.title,
+                            content: article.content,
+                            description: article.description,
+                          ),
+                        ),
+                      );
+                    },
+                    child: Column(
+                      children: [
+                        BlogCard(
                           networkImage: article.urlToImage,
                           heading: article.title,
-                          content: article.content,
-                          description: article.description,
+                          content: article.description,
                         ),
-                      ),
-                    );
-                  },
-                  child: Column(
-                    children: [
-                      BlogCard(
-                        networkImage: article.urlToImage,
-                        heading: article.title,
-                        content: article.description,
-                      ),
-                      SizedBox(
-                        height: 5,
-                      )
-                    ],
-                  ),
-                );
-              },
-            );
-          } else {
-            return const SizedBox.shrink();
-          }
-        },
-      ),
-    );
+                        SizedBox(
+                          height: 5,
+                        )
+                      ],
+                    ),
+                  );
+                },
+              );
+            } else {
+              return const SizedBox.shrink();
+            }
+          },
+        ));
   }
 }
 

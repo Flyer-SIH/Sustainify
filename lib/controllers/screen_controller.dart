@@ -2,17 +2,28 @@ import 'dart:convert';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'dart:ui';
+import 'package:camera/camera.dart';
 import 'package:http/http.dart' as http;
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:sustainify/models/blogs/models.dart';
 
 class ScreenController extends GetxController {
-  Rx<int> screen_index = 2.obs;
+  Rx<int> screen_index = 0.obs;
+  late String result;
+  Rx<bool> isResultFetched = false.obs;
+  Rx<bool> isImageSent = false.obs;
+  late XFile pic;
   late GoogleMapController mapController;
   late LocationPermission permission;
+  late Future<List<Articles>> fetchedArticles;
   late Position position;
+  late LatLng newlatlang;
+  var responseData;
+  late Rx<CameraController> cameraController;
+  late List<CameraDescription> _cameras;
   late RxMap<MarkerId, Marker> markers = {
     MarkerId("initial"): const Marker(markerId: MarkerId("Hello World"))
   }.obs;
@@ -26,20 +37,42 @@ class ScreenController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
+
+    // Fetch Articles
+    fetchedArticles = fetchArticles();
+
+    //Get Location Permission
+    permission = await Geolocator.requestPermission();
+
+    // Get cameras
+    _cameras = await availableCameras();
+    cameraController = CameraController(_cameras[0], ResolutionPreset.max).obs;
+    cameraController.value.initialize();
+
     await setImage();
 
     //Get User Location
-    permission = await Geolocator.requestPermission();
     position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
-  
+
+    // Get recycle center
     getRecycleCenter();
   }
 
+  Future<List<Articles>> fetchArticles() async {
+    final response = await http.get(Uri.parse(
+        'https://newsapi.org/v2/everything?q="waste management"&pageSize=50&apiKey=bb338facda384c838159a4d50bbdc0e1'));
 
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> jsonResponse = json.decode(response.body);
+      final List<dynamic> articleList = jsonResponse['articles'];
+      return articleList.map((article) => Articles.fromJson(article)).toList();
+    } else {
+      throw Exception('Failed to load articles');
+    }
+  }
 
   Future<void> getRecycleCenter() async {
-
     //Generate URL
     var url =
         'https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=recycle&location=${position.latitude.toString()}%2C${position.longitude.toString()}&radius=50000&key=AIzaSyCwYWsLSig5gbymNTstLvy35b7XG_GG72Q';
@@ -64,16 +97,30 @@ class ScreenController extends GetxController {
       // set Markers from data
       setRecycleCenterMarkers(data);
 
-      LatLng newlatlang = LatLng(position.latitude, position.longitude);
-      // Navigate to users current location
-      mapController?.animateCamera(CameraUpdate.newCameraPosition(
-          CameraPosition(target: newlatlang, zoom: 10)));
+      newlatlang = LatLng(position.latitude, position.longitude);
 
       // set new camera position as users current location
       cameraPosition = CameraPosition(target: newlatlang, zoom: 10);
     } else {
       print(response.reasonPhrase);
     }
+  }
+
+  Future<void> upload() async {
+    print("pressed upload");
+    isResultFetched.value = true;
+    // var request = http.MultipartRequest(
+    //     'POST',
+    //     Uri.parse(
+    //         "https://backend-production-2203.up.railway.app/api/image-process"));
+
+    // request.files.add(http.MultipartFile(
+    //     'file', pic.readAsBytes().asStream(), await pic.length(),
+    //     filename: "data.jpeg"));
+    // http.StreamedResponse res = await request.send();
+    // responseData = jsonDecode(await res.stream.bytesToString());
+    // isResultFetched.value = true;
+    // print(responseData);
   }
 
   Future<Uint8List> getBytesFromAsset(String path, int width) async {
