@@ -12,11 +12,16 @@ import 'package:sustainify/models/blogs/models.dart';
 
 class ScreenController extends GetxController {
   Rx<int> screen_index = 0.obs;
+  late String result;
+  Rx<bool> isResultFetched = false.obs;
+  Rx<bool> isImageSent = false.obs;
+  late XFile pic;
   late GoogleMapController mapController;
   Rx<bool> isDataFetched = false.obs;
   late LocationPermission permission;
   late List<Articles> fetchedArticles;
   late Position position;
+  var responseData;
   late Rx<CameraController> cameraController;
   late List<CameraDescription> _cameras;
   late RxMap<MarkerId, Marker> markers = {
@@ -95,6 +100,23 @@ class ScreenController extends GetxController {
     } else {
       print(response.reasonPhrase);
     }
+  }
+
+  Future<void> upload() async {
+    print("pressed upload");
+    isResultFetched.value = true;
+    // var request = http.MultipartRequest(
+    //     'POST',
+    //     Uri.parse(
+    //         "https://backend-production-2203.up.railway.app/api/image-process"));
+
+    // request.files.add(http.MultipartFile(
+    //     'file', pic.readAsBytes().asStream(), await pic.length(),
+    //     filename: "data.jpeg"));
+    // http.StreamedResponse res = await request.send();
+    // responseData = jsonDecode(await res.stream.bytesToString());
+    // isResultFetched.value = true;
+    // print(responseData);
   }
 
   Future<Uint8List> getBytesFromAsset(String path, int width) async {

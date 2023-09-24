@@ -14,6 +14,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      automaticallyImplyLeading: true,
       title: Text(title),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(

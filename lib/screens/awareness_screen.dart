@@ -3,7 +3,6 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sustainify/controllers/screen_controller.dart';
-import 'package:sustainify/models/blogs/articles_resource.dart';
 import 'package:sustainify/models/blogs/models.dart';
 import 'package:sustainify/screens/blog_detail_screen.dart';
 import 'package:sustainify/widgets/custom_app_bar.dart';
