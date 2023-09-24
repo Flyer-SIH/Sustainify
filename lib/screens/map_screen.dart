@@ -20,6 +20,9 @@ class MapScreen extends StatelessWidget {
           mapType: MapType.terrain,
           onMapCreated: (GoogleMapController controller) {
             screenController.mapController = controller;
+                              // Navigate to users current location
+      screenController.mapController?.animateCamera(CameraUpdate.newCameraPosition(
+          CameraPosition(target: screenController.newlatlang, zoom: 10)));
           },
           markers: Set<Marker>.of(screenController.markers.value.values),
         ),

@@ -17,10 +17,10 @@ class ScreenController extends GetxController {
   Rx<bool> isImageSent = false.obs;
   late XFile pic;
   late GoogleMapController mapController;
-  Rx<bool> isDataFetched = false.obs;
   late LocationPermission permission;
-  late List<Articles> fetchedArticles;
+  late Future<List<Articles>> fetchedArticles;
   late Position position;
+  late LatLng newlatlang;
   var responseData;
   late Rx<CameraController> cameraController;
   late List<CameraDescription> _cameras;
@@ -37,17 +37,25 @@ class ScreenController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    fetchedArticles = await fetchArticles();
-    await setImage();
-    //Get User Location
+
+    // Fetch Articles
+    fetchedArticles = fetchArticles();
+
+    //Get Location Permission
     permission = await Geolocator.requestPermission();
-    position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
 
     // Get cameras
     _cameras = await availableCameras();
     cameraController = CameraController(_cameras[0], ResolutionPreset.max).obs;
     cameraController.value.initialize();
+
+    await setImage();
+
+    //Get User Location
+    position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+
+    // Get recycle center
     getRecycleCenter();
   }
 
@@ -58,7 +66,6 @@ class ScreenController extends GetxController {
     if (response.statusCode == 200) {
       final Map<String, dynamic> jsonResponse = json.decode(response.body);
       final List<dynamic> articleList = jsonResponse['articles'];
-      isDataFetched.value = true;
       return articleList.map((article) => Articles.fromJson(article)).toList();
     } else {
       throw Exception('Failed to load articles');
@@ -90,10 +97,7 @@ class ScreenController extends GetxController {
       // set Markers from data
       setRecycleCenterMarkers(data);
 
-      LatLng newlatlang = LatLng(position.latitude, position.longitude);
-      // Navigate to users current location
-      mapController?.animateCamera(CameraUpdate.newCameraPosition(
-          CameraPosition(target: newlatlang, zoom: 10)));
+      newlatlang = LatLng(position.latitude, position.longitude);
 
       // set new camera position as users current location
       cameraPosition = CameraPosition(target: newlatlang, zoom: 10);
