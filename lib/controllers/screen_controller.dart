@@ -108,19 +108,18 @@ class ScreenController extends GetxController {
 
   Future<void> upload() async {
     print("pressed upload");
-    isResultFetched.value = true;
-    // var request = http.MultipartRequest(
-    //     'POST',
-    //     Uri.parse(
-    //         "https://backend-production-2203.up.railway.app/api/image-process"));
+    var request = http.MultipartRequest(
+        'POST',
+        Uri.parse(
+            "https://5dff-182-79-102-194.ngrok-free.app/classify"));
 
-    // request.files.add(http.MultipartFile(
-    //     'file', pic.readAsBytes().asStream(), await pic.length(),
-    //     filename: "data.jpeg"));
-    // http.StreamedResponse res = await request.send();
-    // responseData = jsonDecode(await res.stream.bytesToString());
-    // isResultFetched.value = true;
-    // print(responseData);
+    request.files.add(http.MultipartFile(
+        'image', pic.readAsBytes().asStream(), await pic.length(),
+        filename: "image.jpg"));
+    http.StreamedResponse res = await request.send();
+    responseData = jsonDecode(await res.stream.bytesToString());
+    isResultFetched.value = true;
+    print(responseData["class"]);
   }
 
   Future<Uint8List> getBytesFromAsset(String path, int width) async {
