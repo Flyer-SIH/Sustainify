@@ -2,26 +2,35 @@ import 'dart:convert';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'dart:ui';
+import 'package:appwrite/models.dart';
 import 'package:camera/camera.dart';
 import 'package:http/http.dart' as http;
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:get/get.dart';
+import 'package:appwrite/appwrite.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:sustainify/main.dart';
 import 'package:sustainify/models/blogs/models.dart';
+import 'package:sustainify/screens/login_screen.dart';
 
 class ScreenController extends GetxController {
   Rx<int> screen_index = 0.obs;
   late String result;
+  late String name;
+  var userData;
   Rx<bool> isResultFetched = false.obs;
   Rx<bool> isImageSent = false.obs;
   late XFile pic;
+  late Account account;
+  late Session session;
   late GoogleMapController mapController;
   late LocationPermission permission;
   late Future<List<Articles>> fetchedArticles;
   late Position position;
   late LatLng newlatlang;
   var responseData;
+  late User user;
   late Rx<CameraController> cameraController;
   late List<CameraDescription> _cameras;
   late RxMap<MarkerId, Marker> markers = {
@@ -37,6 +46,29 @@ class ScreenController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
+    print("hello");
+    Client client = Client();
+    client
+        .setEndpoint('https://cloud.appwrite.io/v1')
+        .setProject('6516c52b266f1fb10835')
+        .setSelfSigned(status: true);
+    account = Account(client);
+    print("Here");
+    try {
+      session = await account.getSession(sessionId: "current");
+      print("Yes Session");
+      if (session.provider == "google") {
+        fetchGoogleUserProfile();
+      } else {
+        print("Amazon log in");
+        fetchAmazonUserProfile();
+      }
+      Get.to(MyHomePage());
+    } catch (e) {
+      print(e);
+      Get.to(LoginScreen());
+      print("No Session");
+    }
 
     // Fetch Articles
     fetchedArticles = fetchArticles();
@@ -57,6 +89,73 @@ class ScreenController extends GetxController {
 
     // Get recycle center
     getRecycleCenter();
+  }
+
+  Future<void> signInViaGoogle() async {
+    print("Starting Login");
+    await account.createOAuth2Session(
+        provider: 'google',
+        scopes: ["https://www.googleapis.com/auth/userinfo.profile"]);
+    print("Fetching Current Session");
+    session = await account.getSession(sessionId: "current");
+    print("Printing Provider Token");
+    print(session.providerAccessToken);
+    print("fetching profile");
+    fetchGoogleUserProfile();
+    Get.to(MyHomePage());
+  }
+
+  Future<void> fetchGoogleUserProfile() async {
+    var headers = {'Authorization': 'Bearer ${session.providerAccessToken}'};
+    var request = http.Request('GET',
+        Uri.parse('https://www.googleapis.com/oauth2/v1/userinfo?alt=json'));
+
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      print("got profile");
+      userData = jsonDecode(await response.stream.bytesToString());
+
+      print(userData);
+      print(userData["picture"]);
+      name =
+          userData['name'].split(' ').map((word) => capitalize(word)).join(' ');
+    } else {
+      print(response.reasonPhrase);
+    }
+  }
+
+  Future<void> signInViaAmazon() async {
+    print("Starting Login");
+    await account.createOAuth2Session(provider: 'amazon');
+    print("Fetching Current Session");
+    session = await account.getSession(sessionId: "current");
+    print("Printing Provider Token");
+    print(session.providerAccessToken);
+    Get.to(MyHomePage());
+    print("fetching profile");
+    fetchAmazonUserProfile();
+  }
+
+  Future<void> fetchAmazonUserProfile() async {
+    var headers = {'Authorization': 'Bearer ${session.providerAccessToken}'};
+    var request =
+        http.Request('GET', Uri.parse('https://api.amazon.com/user/profile'));
+
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      userData = jsonDecode(await response.stream.bytesToString());
+      print(userData);
+      name =
+          userData['name'].split(' ').map((word) => capitalize(word)).join(' ');
+    } else {
+      print(response.reasonPhrase);
+    }
   }
 
   Future<List<Articles>> fetchArticles() async {
@@ -108,10 +207,8 @@ class ScreenController extends GetxController {
 
   Future<void> upload() async {
     print("pressed upload");
-    var request = http.MultipartRequest(
-        'POST',
-        Uri.parse(
-            "https://5dff-182-79-102-194.ngrok-free.app/classify"));
+    var request = http.MultipartRequest('POST',
+        Uri.parse("https://5dff-182-79-102-194.ngrok-free.app/classify"));
 
     request.files.add(http.MultipartFile(
         'image', pic.readAsBytes().asStream(), await pic.length(),
@@ -151,5 +248,9 @@ class ScreenController extends GetxController {
           position: LatLng(entry.values.first[0], entry.values.first[1]));
       markers[MarkerId(entry.keys.first.toString())] = marker;
     }
+  }
+
+  String capitalize(String input) {
+    return "${input[0].toUpperCase()}${input.substring(1)}";
   }
 }

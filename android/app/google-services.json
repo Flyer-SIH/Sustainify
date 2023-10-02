@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "599961467126",
+    "project_id": "petapp-efb3b",
+    "storage_bucket": "petapp-efb3b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:599961467126:android:f32771b2626b52a22f94d7",
+        "android_client_info": {
+          "package_name": "com.example.pet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "599961467126-2k0709u1muladkbr7shk13dgmcguj7j1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQpWdCFMmFZxVlWDW8Q8aWIKaEW6MAH9Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "599961467126-2k0709u1muladkbr7shk13dgmcguj7j1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "599961467126-4uk92gie95ktq0mm9afpbk26vbi5u3lt.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.sustainify"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:599961467126:android:eb44798cb2823a002f94d7",
+        "android_client_info": {
+          "package_name": "com.example.sustainify"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "599961467126-2k0709u1muladkbr7shk13dgmcguj7j1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQpWdCFMmFZxVlWDW8Q8aWIKaEW6MAH9Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "599961467126-2k0709u1muladkbr7shk13dgmcguj7j1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "599961467126-4uk92gie95ktq0mm9afpbk26vbi5u3lt.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.sustainify"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

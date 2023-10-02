@@ -1,18 +1,22 @@
-
 import 'package:flutter/material.dart';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
+import 'package:sustainify/screens/login_screen.dart';
+import 'package:sustainify/screens/splash_screen.dart';
 import 'bindings/initial_bindings.dart';
 import 'controllers/screen_controller.dart';
 import 'screens/awareness_screen.dart';
 import 'screens/best_from_waste_screen.dart';
+import 'screens/blog_detail_screen.dart';
 import 'screens/display_picture_screen.dart';
+import 'firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'screens/map_screen.dart';
 import 'screens/notification_screen.dart';
 import 'screens/profile_screen.dart';
 import 'screens/trash_scan_screen.dart';
 import 'package:get/get.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
@@ -25,13 +29,15 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
         title: 'Sustainify',
         initialBinding: InitialBindings(),
-        initialRoute: "/home",
+        initialRoute: "/splash",
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(
               seedColor: const Color.fromARGB(255, 150, 75, 0)),
         ),
         routes: {
           '/home': (context) => MyHomePage(),
+          '/splash': (context) => SplashScreen(),
+          '/login': (context) => LoginScreen(),
         });
   }
 }
@@ -96,10 +102,11 @@ class MyHomePage extends StatelessWidget {
               ? Icon(
                   Icons.camera_rounded,
                   color: Colors.white,
-                ): Icon(
-                      Icons.qr_code_scanner,
-                      color: Colors.white,
-                    ),
+                )
+              : Icon(
+                  Icons.qr_code_scanner,
+                  color: Colors.white,
+                ),
           onPressed: () async {
             print("help");
             if (screenController.screen_index.value == 4) {
@@ -111,7 +118,7 @@ class MyHomePage extends StatelessWidget {
             screenController.screen_index.value = 4;
           },
           backgroundColor: Color.fromARGB(255, 150, 75, 0),
-          //params
+          //paramsd
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: AnimatedBottomNavigationBar(
