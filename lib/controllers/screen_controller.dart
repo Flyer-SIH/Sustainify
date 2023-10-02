@@ -53,21 +53,21 @@ class ScreenController extends GetxController {
         .setProject('6516c52b266f1fb10835')
         .setSelfSigned(status: true);
     account = Account(client);
-    print("Here");
+
+    //Check current auth session
     try {
       session = await account.getSession(sessionId: "current");
       print("Yes Session");
       if (session.provider == "google") {
         fetchGoogleUserProfile();
       } else {
-        print("Amazon log in");
         fetchAmazonUserProfile();
       }
       Get.to(MyHomePage());
     } catch (e) {
       print(e);
-      Get.to(LoginScreen());
       print("No Session");
+      Get.to(LoginScreen());
     }
 
     // Fetch Articles
