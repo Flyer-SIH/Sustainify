@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sustainify/dummy_data/item_data.dart';
 import 'package:sustainify/screens/information_screen.dart';
 import 'package:sustainify/screens/rewards_screen.dart';
 import 'package:sustainify/widgets/custom_app_bar.dart';
 
+import '../controllers/screen_controller.dart';
+
 class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+  ProfileScreen({Key? key}) : super(key: key);
+
+  ScreenController screenController = Get.find<ScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -26,10 +31,8 @@ class ProfileScreen extends StatelessWidget {
                     width: 120,
                     height: 120,
                     child: ClipRRect(
-                        borderRadius: BorderRadius.circular(100),
-                        child: const Image(
-                            image: NetworkImage(
-                                'https://picsum.photos/250?image=9'))),
+                        borderRadius: BorderRadius.circular(1000),
+                        child: Image.network(screenController.session.provider == "google"? screenController.userData['picture']:"https://cloud.appwrite.io/v1/storage/buckets/651994ab068dc6d408bf/files/6519a0443411617586bd/view?project=6516c52b266f1fb10835&mode=admin")),
                   ),
                   Positioned(
                     bottom: 0,
@@ -50,9 +53,9 @@ class ProfileScreen extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 10),
-              Text('Daksh Vasudev',
+              Text(screenController.name,
                   style: Theme.of(context).textTheme.headline4),
-              Text('Software Developer',
+              Text(screenController.userData['email'],
                   style: Theme.of(context).textTheme.bodyText2),
               const SizedBox(height: 20),
 
@@ -111,6 +114,11 @@ class ProfileScreen extends StatelessWidget {
   }
 }
 
+extension StringExtensions on String {
+  String capitalize() {
+    return "${this[0].toUpperCase()}${this.substring(1)}";
+  }
+}
 class ProfileMenuWidget extends StatelessWidget {
   const ProfileMenuWidget({
     Key? key,
