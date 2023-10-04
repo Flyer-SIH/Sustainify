@@ -6,10 +6,7 @@ import 'bindings/initial_bindings.dart';
 import 'controllers/screen_controller.dart';
 import 'screens/awareness_screen.dart';
 import 'screens/best_from_waste_screen.dart';
-import 'screens/blog_detail_screen.dart';
 import 'screens/display_picture_screen.dart';
-import 'firebase_options.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'screens/map_screen.dart';
 import 'screens/notification_screen.dart';
 import 'screens/profile_screen.dart';
@@ -31,6 +28,7 @@ class MyApp extends StatelessWidget {
         initialBinding: InitialBindings(),
         initialRoute: "/splash",
         theme: ThemeData(
+          useMaterial3: true,
           colorScheme: ColorScheme.fromSeed(
               seedColor: const Color.fromARGB(255, 150, 75, 0)),
         ),

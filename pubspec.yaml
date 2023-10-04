@@ -47,6 +47,10 @@ dependencies:
   flutter_ripple: ^0.0.3
   firebase_core: ^2.16.0
   appwrite: ^11.0.0
+  multi_dropdown: ^2.0.1
+  file_picker: ^5.5.0
+  random_string_generator: ^2.0.0
+  appinio_video_player: ^1.2.2
 
 dev_dependencies:
   flutter_test:
