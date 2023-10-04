@@ -226,7 +226,7 @@ class AwarenessScreen extends StatelessWidget {
                             Padding(
                               padding: EdgeInsets.symmetric(horizontal: 10),
                               child: SizedBox(
-                                height: 520,
+                                height: 480,
                                 child: ListView.builder(
                                     itemCount:
                                         screenController.documents.length,
@@ -234,8 +234,9 @@ class AwarenessScreen extends StatelessWidget {
                                           children: [
                                             GestureDetector(
                                               onTap: () async {
-
-                                                Get.to(VideoPlayerScreen(videoLink: 'https://cloud.appwrite.io/v1/storage/buckets/651ab8f5bd29a092dafa/files/${screenController.documents[index].data["VideoID"]}/view?project=6516c52b266f1fb10835&mode=admin'));
+                                                screenController.initializeVideo(
+                                                    'https://cloud.appwrite.io/v1/storage/buckets/651ab8f5bd29a092dafa/files/${screenController.documents[index].data["VideoID"]}/view?project=6516c52b266f1fb10835&mode=admin');
+                                                Get.to(VideoPlayScreen());
                                               },
                                               child: VlogCard(
                                                   networkImage:

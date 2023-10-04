@@ -26,10 +26,13 @@ class ScreenController extends GetxController {
   late String result;
   late String name;
   Rx<bool> isVideoPosting = false.obs;
+  Rx<bool> isInitialised = false.obs;
   Rx<bool> pickedVideo = false.obs;
   Rx<bool> pickedThumbnail = false.obs;
   late List<ValueItem> selectedTags;
   late String uniqueVideoID;
+  late VideoPlayerController videoPlayerController;
+  late CustomVideoPlayerController customVideoPlayerController;
   var userData;
   var videoSays;
   var uploadedVideoPath;
@@ -136,7 +139,6 @@ class ScreenController extends GetxController {
       print(y.data);
     }
   }
-  
 
   Future<void> postVideo() async {
     createUniqueVideoID();
@@ -146,7 +148,6 @@ class ScreenController extends GetxController {
     isVideoPosting.value = false;
     Get.snackbar("Video Posted", "Your video is posted browse title to check");
   }
-
 
   Future<void> pickVideofile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -168,6 +169,20 @@ class ScreenController extends GetxController {
         fileId: uniqueVideoID,
         file: InputFile.fromPath(
             path: uploadedThumbnailPath!, filename: "image.png"));
+  }
+
+  void initializeVideo(String videoLink) {
+    isInitialised.value = false;
+    print("Initializing");
+    videoPlayerController = VideoPlayerController.networkUrl(
+        Uri.parse(videoLink))
+      ..initialize()
+          .then((value) => {print("Initialized"), isInitialised.value = true});
+    print("Moved Forward");
+    customVideoPlayerController = CustomVideoPlayerController(
+      context: Get.context!,
+      videoPlayerController: videoPlayerController,
+    );
   }
 
   Future<void> storeVideoDocument() async {
