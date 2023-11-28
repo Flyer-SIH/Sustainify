@@ -281,10 +281,6 @@ class RewardsBanner extends StatelessWidget {
           ],
         ),
         child: const Row(children: <Widget>[
-          // Expanded(
-          //   flex: 1,
-          //   child: Image.asset(activeReward.imageURL, height: 160, width: 350),
-          // ),
           Expanded(
             flex: 2,
             child: Padding(

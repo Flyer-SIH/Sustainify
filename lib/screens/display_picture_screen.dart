@@ -34,8 +34,28 @@ class DisplayPicture extends StatelessWidget {
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(20)),
                             height: 200,
-                            width: 200,
-                            child: Center(child: Text("The waste is ")),
+                            width: 300,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text("Your waste is "),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Container(
+                                  decoration: BoxDecoration(
+                                      color:  screenController.responseData['class'] == "Non-Biodegradable (Non-Recyclable)"? Colors.red: Colors.green,
+                                      borderRadius: BorderRadius.circular(10)),
+                                  child: Center(
+                                      child: Text(
+                                    screenController.responseData['class'],
+                                    style: TextStyle(color: Colors.white),
+                                  )),
+                                  height: 60,
+                                  width: 280,
+                                )
+                              ],
+                            ),
                           ))
                       : Center(
                           child: LoadingAnimationWidget.threeRotatingDots(
