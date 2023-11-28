@@ -24,13 +24,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Sustainify',
         initialBinding: InitialBindings(),
         initialRoute: "/splash",
         theme: ThemeData(
           useMaterial3: true,
-          colorScheme: ColorScheme.fromSeed(
-              seedColor: const Color.fromARGB(255, 150, 75, 0)),
+          colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 150, 75, 0)),
         ),
         routes: {
           '/home': (context) => MyHomePage(),
@@ -59,20 +59,16 @@ class MyHomePage extends StatelessWidget {
                   child: IconButton(
                       onPressed: () {
                         if (screenController.screen_index.value != 5) {
-                          screenController.prev =
-                              screenController.screen_index.value;
+                          screenController.prev = screenController.screen_index.value;
                           print(screenController.prev);
                           screenController.screen_index.value = 5;
                         } else {
                           print(screenController.prev);
-                          screenController.screen_index.value =
-                              screenController.prev;
+                          screenController.screen_index.value = screenController.prev;
                         }
                       },
                       icon: Icon(
-                        screenController.screen_index.value == 5
-                            ? Icons.notifications_on
-                            : Icons.notifications,
+                        screenController.screen_index.value == 5 ? Icons.notifications_on : Icons.notifications,
                         color: screenController.screen_index.value == 5
                             ? Color.fromARGB(1, 150, 75, 0)
                             : Color.fromARGB(255, 69, 71, 69),
@@ -107,8 +103,7 @@ class MyHomePage extends StatelessWidget {
             print("help");
             if (screenController.screen_index.value == 4) {
               print("index 4 help");
-              screenController.pic =
-                  await screenController.cameraController.value.takePicture();
+              screenController.pic = await screenController.cameraController.value.takePicture();
               Get.to(DisplayPicture());
             }
             screenController.screen_index.value = 4;
@@ -118,12 +113,7 @@ class MyHomePage extends StatelessWidget {
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: AnimatedBottomNavigationBar(
-          icons: [
-            Icons.newspaper,
-            Icons.recycling_rounded,
-            Icons.location_on,
-            Icons.person_2_rounded
-          ],
+          icons: [Icons.newspaper, Icons.recycling_rounded, Icons.location_on, Icons.person_2_rounded],
           activeIndex: screenController.screen_index.value,
           activeColor: Color.fromARGB(255, 150, 75, 0),
           inactiveColor: Color.fromARGB(255, 69, 71, 69),
