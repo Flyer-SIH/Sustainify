@@ -34,7 +34,7 @@ class DisplayPicture extends StatelessWidget {
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(20)),
                             height: 200,
-                            width: 200,
+                            width: 300,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -44,15 +44,15 @@ class DisplayPicture extends StatelessWidget {
                                 ),
                                 Container(
                                   decoration: BoxDecoration(
-                                      color: Colors.green,
-                                      borderRadius: BorderRadius.circular(5)),
+                                      color:  screenController.responseData['class'] == "Non-Biodegradable (Non-Recyclable)"? Colors.red: Colors.green,
+                                      borderRadius: BorderRadius.circular(10)),
                                   child: Center(
                                       child: Text(
                                     screenController.responseData['class'],
                                     style: TextStyle(color: Colors.white),
                                   )),
-                                  height: 40,
-                                  width: 150,
+                                  height: 60,
+                                  width: 280,
                                 )
                               ],
                             ),
