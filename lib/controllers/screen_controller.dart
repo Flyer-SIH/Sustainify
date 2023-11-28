@@ -333,7 +333,7 @@ class ScreenController extends GetxController {
   Future<void> upload() async {
     print("pressed upload");
     var request = http.MultipartRequest('POST',
-        Uri.parse("https://5dff-182-79-102-194.ngrok-free.app/classify"));
+        Uri.parse("https://10d5-115-241-34-98.ngrok-free.app/classify"));
 
     request.files.add(http.MultipartFile(
         'image', pic.readAsBytes().asStream(), await pic.length(),

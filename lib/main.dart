@@ -42,9 +42,7 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatelessWidget {
   MyHomePage({super.key});
-
   ScreenController screenController = Get.find<ScreenController>();
-
   @override
   Widget build(BuildContext context) {
     return Obx(

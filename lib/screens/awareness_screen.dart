@@ -180,7 +180,6 @@ class AwarenessScreen extends StatelessWidget {
                                             controller.openView();
                                           },
                                           onSubmitted: (string) {
-                                            print("heyyyyy");
                                             controller.closeView(string);
                                           },
                                           onChanged: (_) {
